@@ -1,15 +1,52 @@
 # nanoCross
->A pipeline that detect crossovers from gamete DNA of a single individual using ONT sequence libraries.
+>A pipeline that Detecting recombination breakpoints using ONT sequence libraries.
 
+Author: Zuoquan Chen
+
+Email: zuoquanchen@outlook.com
+
+Draft date: Nov. 1, 2021
 ## Dependencies
 
-- g++ >= 4.5
-- [longranger-remix](https://github.com/adreau/longranger-remix)
-- [Cutadapt](https://github.com/marcelm/cutadapt)
-- [Trimmomatic](https://github.com/timflutre/trimmomatic)
-- [BWA](https://github.com/lh3/bwa)
-- [Picard](https://github.com/broadinstitute/picard)
-- [GATK](https://github.com/broadinstitute/gatk)
+- g++ >= 4.8.5
+- [dehomopolymerate](https://github.com/tseemann/dehomopolymerate)
+- [minimap2](https://github.com/lh3/minimap2)
 - [samtools](https://github.com/samtools/samtools)
-- [bcftools](https://github.com/samtools/bcftools)
-- HBOP : available upon request of the authors of the article [A fast and accurate algorithm for single individual haplotyping](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3521186/)
+- [Canu](https://github.com/marbl/canu)
+- [clair](https://github.com/HKU-BAL/Clair)
+- [GATK](https://github.com/broadinstitute/gatk)
+- [Whatshap](https://github.com/whatshap/whatshap)
+- [R >= 3.6.0](https://www.r-project.org/)
+
+## Installation
+
+```
+git clone https://github.com/zuoquanchen/nanoCross.git
+```
+Then, To configure the other tools, add the following directories to your PATH:
+```
+export PATH=$path_to_dehomopolymerate_bin/dehomopolymerate:$PATH
+export PATH=$path_to_minimap2_bin/minimap2:$PATH
+export PATH=$path_to_samtools_bin/samtools:$PATH
+export PATH=$path_to_canu_bin/canu:$PATH
+export PATH=$path_to_clair_bin/clair:$PATH
+export PATH=$path_to_whatshap_bin/whatshap:$PATH
+```
+
+## Usage
+
+NanoCross requires bam files and genomic haplotype files as input files and output of molecules where recombination exists.
+```
+NanoCross.sh -I <ONT.fastq> -R <reference_file> -O <Output> -C <Chromosome> [-wt]
+  -I   Bulk-gamete sequencing use Oxford Nanopore
+  -R   Reference genome file
+  -O   Output file containing recombinant molecules
+  -C   Chromosome information
+------------optional--------
+  -w   Work Directory; default=Current Directory
+  -t   Number of threads; default=10
+```
+
+## License
+
+This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
