@@ -61,6 +61,7 @@ corMinCoverage=0 corMhapSensitivity=high minReadLength=5000 minOverlapLength=500
 # 
 # Step 2 dehomopolymerate compression corrected ONT reads and Reference genome
 #
+
 Deho_reads_dir=$work_dir/Deho_dir
 mkdir -p $Deho_dir
 cd $Deho_dir
@@ -114,6 +115,7 @@ Rscript Phase_Extract.R  $phase_dir/whatshap.sample.phase.vcf $chromosome
 #
 # Step 5 Detection of recombinant molecules
 #
+
 Recom_dir=$work_dir/Recom_dir
 mkdir -p $Recom_dir
 cd $Recom_dir
