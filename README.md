@@ -47,6 +47,15 @@ NanoCross.sh -I <ONT.fastq> -R <reference_file> -O <Output> -C <Chromosome> [-wt
   -t   Number of threads; default=10
 ```
 
+## Output
+
+NanoCross will create these directories:
+Corr_Reads contains Corrected sequence 
+deho_reads contains dehomopolymerate sequence 
+vcf_dir contains the  variant file 
+phase_dir contains phased variant
+recom_dir contains recombinant molecules information
+
 ## License
 
 This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
