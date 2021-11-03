@@ -1,5 +1,5 @@
 # nanoCross
->A pipeline that Detecting recombination breakpoints using ONT sequence libraries.
+>A pipeline that Detecting recombination crossover using ONT sequence libraries.
 
 Author: Zuoquan Chen
 
