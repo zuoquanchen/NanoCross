@@ -52,6 +52,7 @@ NanoCross.sh -I <ONT.fastq> -R <reference_file> -O <Output> -C <Chromosome> [-wt
 NanoCross will create these directories:
 - Corr_Reads contains Corrected sequence 
 - deho_reads contains dehomopolymerate sequence 
+- Bam_dir contains align file 
 - vcf_dir contains the  variant file 
 - phase_dir contains phased variant
 - recom_dir contains recombinant molecules information
