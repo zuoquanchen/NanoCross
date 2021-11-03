@@ -61,7 +61,7 @@ corMinCoverage=0 corMhapSensitivity=high minReadLength=5000 minOverlapLength=500
 # 
 # Step 2 dehomopolymerate compression corrected ONT reads and Reference genome
 #
-deho_reads_dir=$work_dir/Deho_dir
+Deho_reads_dir=$work_dir/Deho_dir
 mkdir -p $Deho_dir
 cd $Deho_dir
 dehomopolymerate -f  $Corr_Reads_dir/$sample/canu.correctedReads.fasta.gz > $Deho_dir/$sample.deho.fasta \
@@ -77,8 +77,6 @@ dehomopolymerate -f  $Deho_dir/reference.fasta > $Deho_dir/reference.deho.fasta 
 
 Bam_dir=$work_dir/Bam_dir
 mkdir -p $Bam_dir
-Vcf_dir=$work_dir/Vcf_dir
-mkdir -p $Vcf_dir
 cd $Bam_dir
 minimap2 -t 20  -ax map-ont -a  $Deho_dir/reference.deho.fasta $Deho_dir/$sample.deho.fasta | samtools view  -Shb  > $bam_dir/$sample.bam
 samtools sort -o $Bam_dir/$sample.sort.bam  -@ $threads $Bam_dir/$sample.bam
@@ -86,6 +84,8 @@ samtools index $sample.sort.bam
 samtools view -bF 2308 -q 60 $sample.sort.bam > $sample.uni.bam 
 samtools index $sample.uni.bam
 
+Vcf_dir=$work_dir/Vcf_dir
+mkdir -p $Vcf_dir
 cd $Vcf_dir
 model=/your_ont_model_path
 python clair.py callVarBam --chkpnt_fn $model/model --bam_fn $Bam_dir/$sample.uni.bam \
@@ -100,10 +100,12 @@ gatk --java-options '-DGATK_STACKTRACE_ON_USER_EXCEPTION=true' VariantFiltration
 #
 # Step 4 Haplotype construction
 #
-phase_dir=$work_dir/phase_dir
-mkdir -p $phase_dir
 
-whatshap phase -o $phase_dir/whatshap.sample.phase.vcf --max-coverage 20 --reference=$Deho_dir/reference.deho.fasta \
+Phase_dir=$work_dir/Phase_dir
+mkdir -p $Phase_dir
+cd $Phase_dir
+
+whatshap phase -o $Phase_dir/whatshap.sample.phase.vcf --max-coverage 20 --reference=$Deho_dir/reference.deho.fasta \
 $Vcf_dir/clair.$sample.filtered.vcf  $Bam_dir/$sample.uni.bam  \
 > whatshap_phase.$sample.txt 2> error_phase.$sample.txt 
 # Extraction of haplotype block information 
@@ -112,8 +114,8 @@ Rscript Phase_Extract.R  $phase_dir/whatshap.sample.phase.vcf $chromosome
 #
 # Step 5 Detection of recombinant molecules
 #
-recom_dir=$work_dir/recom_dir
-mkdir -p $recom_dir
-cd $recom_dir
+Recom_dir=$work_dir/Recom_dir
+mkdir -p $Recom_dir
+cd $Recom_dir
 
-Rscript Detect_Recombination.R $Bam_dir/$sample.uni.bam $phase_dir/$chromosome.phase.txt 20 ./$chromosome.recom.txt 
+Rscript Detect_Recombination.R $Bam_dir/$sample.uni.bam $Phase_dir/$chromosome.phase.txt 20 ./$chromosome.recom.txt 
