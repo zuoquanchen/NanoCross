@@ -28,9 +28,10 @@ Then, To configure the other tools, add the following directories to your PATH:
 export PATH=$path_to_dehomopolymerate_bin/dehomopolymerate:$PATH
 export PATH=$path_to_minimap2_bin/minimap2:$PATH
 export PATH=$path_to_samtools_bin/samtools:$PATH
-export PATH=$path_to_canu_bin/canu:$PATH
 export PATH=$path_to_clair_bin/clair:$PATH
+export PATH=$path_to_igvtools_bin/igvtools:$PATH
 export PATH=$path_to_whatshap_bin/whatshap:$PATH
+export PATH=$path_to_Rscript_bin/Rscript:$PATH
 ```
 
 ## Usage
@@ -39,6 +40,7 @@ NanoCross requires bam files and genomic haplotype files as input files and outp
 ```
 NanoCross.sh -I <ONT.fastq> -R <reference_file> -O <Output> -C <Chromosome> [-wt]
   -I   Bulk-gamete sequencing use Oxford Nanopore
+  -N   sample name of input file
   -R   Reference genome file
   -O   Output file containing recombinant molecules
   -C   Chromosome information
@@ -49,13 +51,12 @@ NanoCross.sh -I <ONT.fastq> -R <reference_file> -O <Output> -C <Chromosome> [-wt
 
 ## Output
 
-NanoCross will create these directories:
-- Corr_Reads contains Corrected sequence 
+NanoCross will create these directories: 
 - Deho_reads contains dehomopolymerate sequence 
 - Bam_dir contains align file 
 - Vcf_dir contains the  variant file 
 - Phase_dir contains phased variant
-- Recom_dir contains recombinant molecules information
+- Recom_dir contains recombinant molecules and location information
 
 ## License
 
