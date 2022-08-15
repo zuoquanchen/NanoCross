@@ -136,34 +136,18 @@ FindRecReads<- function(i,seq_num=0,m=0,gapin="false"){
 			phase_vec=c()
 			phase_pos=c()
 			for (n in 4:(npos-3)){
-			
 			win_vec=hap_vec[(n-3):(n+3)]
+			Anum=length(win_vec[win_vec=="A"])
+			Bnum=length(win_vec[win_vec=="B"])
+			hap_score=Anum-Bnum
 			win_vec=win_vec[win_vec != "NA"]
-			win_data=as.data.frame(table(win_vec))
-			rownames(win_data)=win_data$win_vec
-			if (nrow(win_data)==1){
-				if (win_data$win_vec[1]=="A"){
-					Anum=as.numeric(win_data$Freq[1])
-					Bnum=0
-				}else {
-					Bnum=as.numeric(win_data$Freq[1])
-					Anum=0
-				}
-			}else if (nrow(win_data)==2){
-				Anum=as.numeric(win_data$Freq[1])
-				Bnum=as.numeric(win_data$Freq[2])
-			}else {
-				Anum=0
-				Bnum=0
-			}
-			
 			if (length(win_vec)==0){
 				phase="NA"
 			}
 			else{
-				if ((Anum/length(win_vec))>=(5/6)){
+				if ((hap_score/length(win_vec))>=(4/6)){
 					phase="A"
-				}else if ((Bnum/length(win_vec))>=(5/6)){
+				}else if ((hap_score/length(win_vec))<=(-4/6)){
 					phase="B"
 				}else {
 					phase="NA"
